@@ -1,2 +1,4 @@
 # Moxa_AWK_1121
-The repo contains security issues identified in Industrial router IIoT system Moxa AWK_1121.
+The repo contains security issues identified in Industrial router IIoT system Moxa AWK-3121.
+
+CVE-2018-10690, CVE-2018-10691, CVE-2018-10692, CVE-2018-10693, CVE-2018-10694, CVE-2018-10695, CVE-2018-10696, CVE-2018-10697, CVE-2018-10698, CVE-2018-10699, CVE-2018-10700, CVE-2018-10701, CVE-2018-10702, CVE-2018-10703
